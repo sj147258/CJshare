@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title id="headtitle">这里是专辑的标题文字内容</title>
+	
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/nc_share.css">
+
+</head>
+
+<body>
+
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+ 
+<!-- popper.min.js 用于弹窗、提示、下拉码单 -->
+<script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+ 
+<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+	
+<div class="container">
+	<div class="list_title" >
+		<span id="title">-</span>
+	</div>
+	
+	<div class="row" style="padding: 0 5px">
+		<div class="col-7" >
+			<div class="float-left list_face">
+				<img id="userFace" src="img/face.jpg">
+			</div>
+			<div class="list_name">
+				<span id="userName">-</span>
+			</div>
+		</div>
+		<div class="col-5 text-right center-block list_date" ><span id="publicDate">0000-00-00 00:00</span></div>
+	</div>
+	
+	<div class="list_info">
+		<span id="description"></span>
+	</div>	
+	<hr>	
+	<div class="list_t">
+		专辑内容 <font>(<span id="noteNum">0</span>条)</font>
+	</div>	
+	
+	<div class="row" id="noteList">
+
+
+	
+
+		
+
+		<!--<div class="col-md-6 col-xs-12" >
+			<div class="list_box">
+					<img src="img/002.png" class="float-left">
+					<div class="justify-content-cente d-flex  align-items-center list_pic_name">
+						<div  class="list_pic_name_t">
+							这里是笔记的标题文字内容，具体文字文字文字文字
+						</div>
+					</div>
+				</div>
+		</div>		
+		
+
+
+		<div class="col-md-6 col-xs-12" >
+			<div class="list_box">
+					<img src="img/003.png" class="float-left">
+					<div class="justify-content-cente d-flex  align-items-center list_pic_name">
+						<div  class="list_pic_name_t">
+							这里是笔记的标题文字内
+						</div>
+					</div>
+				</div>
+		</div>
+		
+
+
+		<div class="col-md-6 col-xs-12" >
+			<div class="list_box">
+					<img src="img/006.png" class="float-left">
+					<div class="justify-content-cente d-flex  align-items-center list_pic_name">
+						<div  class="list_pic_name_t">
+							这里是笔记的标题文字内 The end is always near.
+						</div>
+					</div>
+				</div>
+		</div>
+
+		
+		<div class="col-md-6 col-xs-12" >
+			<div class="list_box">
+					<img src="img/005.png" class="float-left">
+					<div class="justify-content-cente d-flex  align-items-center list_pic_name">
+						<div  class="list_pic_name_t">
+							The breeding process of peachblossom miniascape and the flower forcing technique were reviewed.
+						</div>
+					</div>
+				</div>
+		</div>		
+		-->
+		
+	
+	</div>	
+	
+</div>	
+	
+<div class="nc_tip">
+	更多内容请下载云简APP
+</div>	
+	
+<nav class="navbar fixed-bottom nc_nav_bar" >
+	<div class="nav_back"></div>
+	<div class="row fixed-bottom justify-content-cente d-flex  align-items-center nav_info">
+		<div class="pl-0 nav_logo">
+			<img src="img/logo.png">
+		</div>
+		<div class="col" >
+			<span class="nav_logo_name" >观箴·云简</span><br>
+			<span class="nav_logo_title">匠人精神打造艺术品大数据</span>
+		</div>
+		<div class="col-4 text-right pr-0">
+			<button type="button" class="btn nav_btn">下载云简</button>
+		</div>
+	</div>	
+</nav>
+
+<script type="text/javascript">
+
+
+	$(function(){
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+			var r = window.location.search.substr(1).match(reg);
+			if (r!=null) return (r[2]); return null;
+		}
+		var isAjax=true;
+		var id= GetQueryString('id');
+		var noteId= GetQueryString('noteId');
+		if(id == "" || id == null || id == undefined){ // "",null,undefined
+			alert("请传入正确的Id！");
+			isAjax=false;
+		}
+
+		var  imgPath="http://10.100.40.201/";
+		//
+		if(isAjax){
+			$.ajax({
+				//请求方式
+				type : "GET",
+				//请求的媒体类型
+				/*contentType: "application/json;charset=UTF-8",*/
+				//请求地址
+				url : "http://127.0.0.1:8000/api/v1/noteShare/getNoteShareAlbum/"+id,
+				//数据，json字符串
+				data :"",
+				//请求成功
+				success : function(result) {
+					if (result.code==0) {
+						var  album=result.data
+						$("#headtitle").text(album.name);
+						$("#title").text(album.name);
+						$("#userFace").attr('src',imgPath+album.smallPic);
+						$("#userName").text(album.nickname);
+						$("#publicDate").text(album.publicDate);
+						$("#description").text(album.description);//
+						$("#noteNum").text(album.noteNum);//
+						var noteListHtml="";
+						var   noteList=	album.sonNoteList
+						if(noteList  != null && noteList  != undefined && noteList.length>0 ){
+							for (var i=0;i<noteList.length;i++) {
+							/*<div class="col-md-6 col-xs-12" >
+										<div class="list_box">
+										<img src="img/001.png" class="float-left">
+										<div class="justify-content-cente d-flex  align-items-center list_pic_name">
+										<div  class="list_pic_name_t">
+										这里是笔记的标题文字内容，具体文字文字文字文字多位艺术界资深人士参与开发，以工匠精神锻造扎实细节。云简，“云”技术上的数字化
+								</div>
+								</div>
+								</div>
+								</div>*/
+
+								noteListHtml=noteListHtml+"<div class='col-md-6 col-xs-12' >" +
+										"<a href='note.html?id="+id+"&noteId="+noteList[i].id+"' style='text-decoration:none;'>"+
+											"<div class='list_box'>"+
+												"<img src='"+noteList[i].headImgUrl+"' class='float-left'>"+
+												"<div class='justify-content-cente d-flex  align-items-center list_pic_name'>" +
+												"<div  class='list_pic_name_t'>" +noteList[i].name+
+											"</div></div></div></a></div>"
+
+							}
+						}
+						$("#noteList").html(noteListHtml);
+
+
+					}else{
+						alert(result.msg)
+					}
+
+
+				},
+				//请求失败，包含具体的错误信息
+				error : function(e){
+					console.log(e.status);
+					console.log(e.responseText);
+				}
+			});
+		}
+	});
+
+
+</script>
+
+
+</body>
+</html>
