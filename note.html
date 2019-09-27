@@ -291,12 +291,12 @@ $(document).ready(function(){
 		if(isAjax){
 			$.ajax({
 				type : "GET",
-				url : "http://127.0.0.1:8000/api/v1/noteShare/getNoteShareNote/"+id+"?noteId="+noteId,
+				url : "http://preview.yunjianart.com/api/v1/noteShare/getNoteShareNote/"+id+"?noteId="+noteId,
 				data :"",
 				success : function(result) {
 					if (result.code==0) {
 						$("#title").text(result.data.name);
-						$("#userFace").attr('src',imgPath+result.data.smallPic);
+						$("#userFace").attr('src',result.data.smallPicUrl);
 						$("#userName").text(result.data.nickname);
 						$("#publicDate").text(result.data.publicDate);
 						var noteImgsHtml="";
