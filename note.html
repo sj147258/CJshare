@@ -291,7 +291,7 @@ $(document).ready(function(){
 		if(isAjax){
 			$.ajax({
 				type : "GET",
-				url : "http://preview.yunjianart.com/api/v1/noteShare/getNoteShareNote/"+id+"?noteId="+noteId,
+				url : "preview.yunjianart.com/api/v1/noteShare/getNoteShareNote/"+id+"?noteId="+noteId,
 				data :"",
 				success : function(result) {
 					if (result.code==0) {
