@@ -151,15 +151,11 @@
 		//
 		if(isAjax){
 			$.ajax({
-				//请求方式
+				
 				type : "GET",
-				//请求的媒体类型
-				/*contentType: "application/json;charset=UTF-8",*/
-				//请求地址
-				url : "preview.yunjianart.com/api/v1/noteShare/getNoteShareAlbum/"+id,
-				//数据，json字符串
-				data :"",
-				//请求成功
+				
+				url : "preview.yunjianart.com/api/v1/noteShare/getNoteShareAlbum/"+id,				
+				data :"",			
 				success : function(result) {
 					if (result.code==0) {
 						var  album=result.data
